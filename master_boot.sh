@@ -22,4 +22,5 @@ cp /vagrant/hosts /etc/ansible/hosts
 #
 # This installs the docker role files for ansible to execute
 #
-tar -xvf /vagrant/ansible_src/docker.tar -C /etc/ansible/roles/
+tar -cfv docker.tar /vagrant/Ansible/docker
+tar -xvf /vagrant/Ansible/docker.tar /etc/ansible/roles/
