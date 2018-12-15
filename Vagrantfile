@@ -51,9 +51,12 @@ Vagrant.configure("2") do |config|
 	  fh.puts("#{private_ip} ansible_ssh_pass=vagrant")
 	  fh.close
 #
-# Correct ssh issue for node
+# Correct ssh issue for node by enabling password-based login
 #
-	  node.vm.provision :shell, path: "node_boot.sh"
+	  config.vm.provision "shell", inline: <<-SHELL
+        sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+		service ssh restart
+      SHELL
 	  node.vm.provider :virtualbox do |v|
 	    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
         v.customize ["modifyvm", :id, "--memory", 2048]
